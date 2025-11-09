@@ -10,11 +10,21 @@
  */
 
 #include <initializer_list>
+#include <sstream>
 #include <vector>
 
-#include <catch.hpp>
-
 #include <libparenth.hpp>
+
+// Disable Catch2's range detection for fbitset by providing stream insertion operator
+namespace fbitset {
+    template<int N>
+    inline std::ostream& operator<<(std::ostream& os, const Fbitset<N>& fs) {
+        os << "Fbitset<" << N << ">{count=" << fs.count() << "}";
+        return os;
+    }
+}
+
+#include <catch2/catch_test_macros.hpp>
 
 using namespace libparenth;
 

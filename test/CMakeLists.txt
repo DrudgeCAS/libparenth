@@ -1,16 +1,17 @@
-# Download the Catch2 single header.
+# Fetch Catch2 v3.4.0
+include(FetchContent)
 
-file(DOWNLOAD
-        "https://github.com/catchorg/Catch2/releases/download/v2.0.1/catch.hpp"
-        "${CMAKE_CURRENT_BINARY_DIR}/catch.hpp"
-        )
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v3.4.0
+)
 
-include_directories(testmain
-        PRIVATE ${CMAKE_CURRENT_BINARY_DIR}
-        )
+FetchContent_MakeAvailable(Catch2)
 
 # The main test driver.
 add_executable(testmain
-        testmain.cpp
         matrixchain.cpp
         )
+
+target_link_libraries(testmain PRIVATE Catch2::Catch2WithMain)
