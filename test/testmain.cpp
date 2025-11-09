@@ -1,8 +1,2 @@
-#define CATCH_CONFIG_RUNNER
-#include <catch.hpp>
-
-int main(int argc, char* argv[])
-{
-    int result = Catch::Session().run(argc, argv);
-    return result;
-}
+// Main test runner is provided by Catch2::Catch2WithMain
+// This file is kept for potential future custom main() if needed
