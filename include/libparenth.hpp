@@ -329,14 +329,14 @@ private:
             auto bsums = std::move(q_.top());
             q_.pop();
 
-            auto has_top = bsums.curr_sums.count() > 0;
+            auto has_top_idx = bsums.curr_sums.count() > 0;
             auto top_idx = bsums.curr_sums.find_last();
             auto next_idx = top_idx + 1;
             if (next_idx < sums_.size()) {
 
                 // Augmentation.
                 bsums.lsc = bsums.lsc * parenther_.dims_[sums_[next_idx]];
-                if (!has_top) {
+                if (!has_top_idx) {
                     bsums.lsc = bsums.lsc * Dim(2l);
                 }
                 bsums.curr_sums.set(next_idx);
@@ -346,7 +346,7 @@ private:
                 }
 
                 // Shift.
-                if (has_top) {
+                if (has_top_idx) {
                     const auto& top_dim = parenther_.dims_[sums_[top_idx]];
                     assert(bsums.lsc % top_dim == 0);
                     bsums.lsc = bsums.lsc / top_dim;
