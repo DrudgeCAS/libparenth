@@ -17,8 +17,8 @@
 
 // Disable Catch2's range detection for fbitset by providing stream insertion operator
 namespace fbitset {
-    template<int N>
-    inline std::ostream& operator<<(std::ostream& os, const Fbitset<N>& fs) {
+    template<Size N, typename L, typename E>
+    inline std::ostream& operator<<(std::ostream& os, const Fbitset<N, L, E>& fs) {
         os << "Fbitset<" << N << ">{count=" << fs.count() << "}";
         return os;
     }
