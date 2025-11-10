@@ -33,6 +33,7 @@
 
 /.idea/
 /cmake-*/
+/build/
 /build-*/
 /test/catch.hpp
 
