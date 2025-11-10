@@ -331,6 +331,8 @@ private:
 
             auto has_top_idx = bsums.curr_sums.count() > 0;
             auto top_idx = bsums.curr_sums.find_last();
+            // Note: When count() == 0, find_last() returns SIZE_MAX.
+            // next_idx wraps to 0 via unsigned overflow, which is well-defined.
             auto next_idx = top_idx + 1;
             if (next_idx < sums_.size()) {
 
