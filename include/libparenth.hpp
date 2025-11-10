@@ -125,12 +125,12 @@ public:
     /** The total number of summation and external indices.
      */
 
-    size_t n_dims() const noexcept { return dims_.size(); }
+    [[nodiscard]] size_t n_dims() const noexcept { return dims_.size(); }
 
     /** The total number of factors.
      */
 
-    size_t n_factors() const noexcept { return dims_on_.size(); }
+    [[nodiscard]] size_t n_factors() const noexcept { return dims_on_.size(); }
 
     /** The two operands of a pairwise contraction.
      *
@@ -218,7 +218,7 @@ public:
      * the traversed subproblems can be found, are returned.
      */
 
-    Mem opt(Mode mode, bool if_incl)
+    [[nodiscard]] Mem opt(Mode mode, bool if_incl)
     {
         Mem mem{};
 
@@ -839,7 +839,7 @@ private:
      * zero).
      */
 
-    Dim get_tot(const Dim_subset& dims) const noexcept
+    [[nodiscard]] Dim get_tot(const Dim_subset& dims) const noexcept
     {
         Dim res{ 1l };
         for (auto it = dims.begin(); it; ++it) {
