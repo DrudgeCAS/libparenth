@@ -36,5 +36,5 @@
 /build/
 /build-*/
 /_codeql_build_dir/
-/test/catch.hpp
+_codeql_detected_source_root
 
