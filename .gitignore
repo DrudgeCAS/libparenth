@@ -35,5 +35,6 @@
 /cmake-*/
 /build/
 /build-*/
+/_codeql_build_dir/
 /test/catch.hpp
 
