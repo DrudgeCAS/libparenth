@@ -12,6 +12,7 @@ FetchContent_MakeAvailable(Catch2)
 # The main test driver.
 add_executable(testmain
         matrixchain.cpp
+        nonclassical.cpp
         )
 
 target_link_libraries(testmain PRIVATE Catch2::Catch2WithMain)

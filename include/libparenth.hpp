@@ -97,6 +97,7 @@ public:
         , n_sums_{ n_sums }
         , factors_with_{}
         , dims_on_{}
+        , if_classical_{ true }
     {
         assert(std::is_sorted(dims_.cbegin(), dims_.cbegin() + n_sums_));
 
@@ -116,6 +117,13 @@ public:
         }
 
         assert(factor_idx == n_factors);
+
+        for (Size i = 0; i < n_sums_; ++i) {
+            if (factors_with_[i].count() != 2) {
+                if_classical_ = false;
+                break;
+            }
+        }
     }
 
     // Except the above constructor, normally we would put the basic
@@ -750,7 +758,20 @@ private:
             }
 
             // Unnatural partition.
-            if (if_for_opt && chunks.size() > 2
+            //
+            // This skipping is an acceleration for classical contractions,
+            // where every summation is involved by exactly two factors.  There
+            // a partition shattering the factors into more than two chunks
+            // that are all already memoized is also reachable from a smaller
+            // set of broken summations, so nothing is lost by skipping it.
+            // When a summation is involved by more than two factors that no
+            // longer holds: the skipping then loses the optimal
+            // parenthesization, and skipping every candidate would leave the
+            // subproblem without any evaluation at all, making the read of
+            // `evals.front()` below undefined.  Hence the restriction to
+            // classical problems, and the guard keeping one evaluation.
+            if (if_for_opt && if_classical_ && !evals.empty()
+                && chunks.size() > 2
                 && std::all_of(
                        chunks.cbegin(), chunks.cend(), [&mem](const Subset& i) {
                            return mem.count(i.factors) != 0;
@@ -872,6 +893,14 @@ private:
      */
 
     std::vector<Dim_subset> dims_on_;
+
+    /** If every summation is involved by exactly two factors.
+     *
+     * This is the classical tensor contraction problem.  Some of the
+     * accelerations of the search are only valid under this assumption.
+     */
+
+    bool if_classical_;
 };
 }
 
